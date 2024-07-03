@@ -1,0 +1,70 @@
+.highlight-text {
+  color:#2a4365;
+  font-size: 40px;
+}
+header {
+  height: 80px; /* Adjust the height as needed */
+  background-color:#a09999; /* Optional background color */
+  border-bottom: 1px solid #dddddd; /* Optional border bottom */
+}
+
+header nav {
+  height: 100%; /* Fill the entire height of the header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; /* Adjust padding as needed */
+}
+
+header nav h1 {
+  font-size: 24px; /* Optional font size */
+  color: #333333; /* Optional font color */
+}
+
+header nav .right-nav {
+  display: flex;
+  align-items: center;
+}
+
+header nav .right-nav a {
+  margin-left: 20px; /* Optional margin between links */
+  text-decoration: none;
+  color:black; /* Optional link color */
+  font-size:larger;
+}
+
+header nav .nav-link {
+  margin-right: 1rem;
+  text-decoration: none;
+  color:black;
+  font-size: 1rem;
+}
+
+header nav .avtar {
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.logout-button {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.header-broad {
+  padding: 50px;
+  background-color: #f2f2f2;
+  border-bottom: 5px solid #ccc;
+}
+
+
