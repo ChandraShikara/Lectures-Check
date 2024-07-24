@@ -1,9 +1,20 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const TranscriptionSchema = new mongoose.Schema({
-    text: { type: String, required: true },
-    audio: { type: String, required: true } // Change the type to String for storing the audio file path or filename
+const transcriptionSchema = new Schema({
+    text: {
+        type: String,
+        required: true
+    },
+    audio: {
+        type: Schema.Types.ObjectId,
+        ref: 'Audio'
+    },
+    media: {
+        type: Schema.Types.ObjectId,
+        ref: 'Media'
+    }
 });
 
-const Transcription = mongoose.model('Transcription', TranscriptionSchema);
+const Transcription = mongoose.model('Transcription', transcriptionSchema);
 module.exports = Transcription;

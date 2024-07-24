@@ -1,10 +1,24 @@
-    const mongoose = require('mongoose');
+// models/audioSchema.js
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-    const AudioSchema = new mongoose.Schema({
-        title: { type: String, required: true },
-        audioFile: { data: Buffer, contentType: String }, // Store audio as Buffer data
-        transcription: { type: mongoose.Schema.Types.ObjectId, ref: 'Transcription' }
-    });
+const audioSchema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    audioFile: {
+        data: Buffer,
+        contentType: String
+    },
+    transcription: {
+        type: Schema.Types.ObjectId,
+        ref: 'Transcription'
+    },
+    media: {
+        type: Schema.Types.ObjectId,
+        ref: 'Media'
+    }
+});
 
-    const Audio = mongoose.model('Audio', AudioSchema);
-    module.exports = Audio;
+module.exports = mongoose.model('Audio', audioSchema);

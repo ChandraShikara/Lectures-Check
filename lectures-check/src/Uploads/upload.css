@@ -1,34 +1,51 @@
-.App{
+.App {
   display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 30px;
-    flex-direction: column;
-    
-  
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+  flex-direction: column;
 }
-.formStyle{
+
+.formStyle {
   padding: 20px;
   border: 1px solid black;
   width: 25%;
   text-align: center;
 }
 
-.form-control{
+.form-control {
   border-color: black !important;
 }
-.uploaded{
+
+.uploaded {
   margin-top: 30px;
- width: 100%;
- text-align: center;
- padding-left: 20px;
-  
+  width: 100%;
+  text-align: center;
+  padding-left: 20px;
 }
-.output-div{
+
+.output-div {
   display: flex;
-    justify-content: space-evenly;
+  justify-content: space-evenly;
 }
-.inner-div{
+
+.inner-div {
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
+}
+
+.scrollable-div {
+  max-height: 400px; /* Adjust as needed */
+  width: 20%; /* Adjust width as needed */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+/* New CSS for button spacing */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Adds space between buttons */
 }

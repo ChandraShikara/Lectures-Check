@@ -15,6 +15,8 @@ import Uploadpage from './Uploads/Uploadpage';
 import Features from './components/features-secton/Features';
 import Uploadpdf from './Uploads/Uploadpdf';
 import UploadList from './Uploads/UploadList';
+import Anlayzepage from './Uploads/Anlayzepage';
+
 function App() {
     const [isLoading, setIsLoading] = useState(true);
     const { setLoginData } = useContext(LoginContext);
@@ -51,6 +53,7 @@ function App() {
                         <Route path="/features" element={<Features/>}/>
                         <Route path="/uploads" element={<Uploadpdf/>}/>
                         <Route path="/uploadvd" element={<Uploadpage/>}/>
+                        <Route path = "/analyze" element = {<Anlayzepage/>}/>
                     </Routes>
                 </>
             )}

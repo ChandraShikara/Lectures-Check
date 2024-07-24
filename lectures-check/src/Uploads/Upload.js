@@ -1,112 +1,141 @@
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './upload.css';
 
 function Upload() {
-  const [title, setTitle] = useState("");
-  const [file, setFile] = useState("");
-  const [allPdf, setAllPdf] = useState(null);
-  const navigate = useNavigate();
+    const location = useLocation();
+    const { videoId } = location.state || {}; 
+    const [title, setTitle] = useState("");
+    const [file, setFile] = useState(null); // Changed initial value to null
+    const [allPdf, setAllPdf] = useState([]);
+    const [pdfId, setPdfId] = useState(null);
+    const [isPdfUploaded, setIsPdfUploaded] = useState(false);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    getPdf();
-  }, []);
-
-  const getPdf = async () => {
-    try {
-      const result = await axios.get("http://localhost:5000/get-files");
-      console.log(result.data.data);
-      setAllPdf(result.data.data);
-    } catch (error) {
-      console.error('Error fetching PDFs:', error);
-    }
-  };
-
-  const submitPdf = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("file", file);
-    console.log(title, file)
-    try {
-      const result = await axios.post(
-        "http://localhost:5000/upload-files",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
+    useEffect(() => {
+        console.log('Current videoId:', videoId);
+        console.log('Current pdfId:', pdfId);
+    }, [videoId, pdfId]);
+  
+    const getPdf = async () => {
+        try {
+            const result = await axios.get("http://localhost:5000/get-files");
+            setAllPdf(result.data.data);
+        } catch (error) {
+            console.error('Error fetching PDFs:', error);
         }
-      );
-      console.log(result);
-      if (result.data.status === "ok") {
-        alert("Uploaded Successfully!!!!!");
-        // Refresh the list of PDFs after successful upload
-        getPdf();
-      }
-    } catch (error) {
-      console.error('Error uploading PDF:', error);
-      alert('Error uploading PDF. Please try again.');
-    }
-  };
+    };
 
-  const showPdf = (pdf) => {
-    window.open(`http://localhost:5000/files/${pdf}`, "_blank", "noreferrer");
-  };
+    const submitPdf = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("file", file);
+  
+        try {
+            const result = await axios.post(
+                "http://localhost:5000/upload-files",
+                formData,
+                {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }
+            );
+            console.log('Upload result:', result.data);
+            if (result.data.status === "ok") {
+                alert("Uploaded Successfully!");
+                getPdf(); // Refresh the list of PDFs after successful upload
+  
+                if (result.data.pdfId) {
+                    setPdfId(result.data.pdfId);
+                    setIsPdfUploaded(true);
+                }
+            } else {
+                alert('Error uploading PDF.');
+            }
+        } catch (error) {
+            console.error('Error uploading PDF:', error);
+            alert('Error uploading PDF. Please try again.');
+        }
+    };
 
-  const handleBack = () => {
-    navigate('/uploadvd');
-  };
+    const showPdf = (pdf) => {
+        window.open(`http://localhost:5000/files/${pdf}`, "_blank", "noreferrer");
+    };
 
-  return (
-    <div className="App">
-      <form className="formStyle" onSubmit={submitPdf}>
-        <h4>Upload PDF in React</h4><br/>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Title"
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <br/>
-        <input
-          type="file"
-          className="form-control"
-          accept="application/pdf"
-          required
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-        <br/>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <button className="btn btn-primary" type='submit'>
-            Submit
-          </button>
-          <button 
-            className="btn btn-orangishyellow" 
-            onClick={handleBack}
-            style={{ backgroundColor: '#ffc107', color: 'black',border: 'none' }}
-          >
-            Back
-          </button>
+    const handleBack = () => {
+        navigate('/uploadvd');
+    };
+
+    const handleNext = () => {
+        if (pdfId && videoId) {
+            navigate('/analyze', { state: { videoId, pdfId } });
+        } else {
+            alert('Please upload a video and select a PDF.');
+        }
+    };
+  
+    return (
+        <div className="App">
+            <form className="formStyle" onSubmit={submitPdf}>
+                <h4>Upload PDF</h4><br/>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Title"
+                    required
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    disabled={isPdfUploaded}
+                />
+                <br/>
+                <input
+                    type="file"
+                    className="form-control"
+                    accept="application/pdf"
+                    required
+                    onChange={(e) => setFile(e.target.files[0])}
+                    disabled={isPdfUploaded}
+                />
+                <br/>
+                <div className="button-container">
+                    {!isPdfUploaded && (
+                        <button className="btn btn-primary" type='submit'>
+                            Submit
+                        </button>
+                    )}
+                    <button 
+                        className="btn btn-orangishyellow" 
+                        onClick={handleBack}
+                    >
+                        Back
+                    </button>
+                    {isPdfUploaded && (
+                        <button 
+                            className="btn btn-success" 
+                            onClick={handleNext}
+                        >
+                            Next
+                        </button>
+                    )}
+                </div>
+            </form>
+
+            <div className='uploaded'>
+                <h4>Uploaded PDFs:</h4>
+                <div className='scrollable-div'>
+                    {allPdf.length === 0
+                        ? "Loading..."
+                        : allPdf.map((data) => (
+                            <div className='inner-div' key={data._id}>
+                                <h6>Title: {data.title}</h6>
+                                <button className='btn btn-primary' onClick={() => showPdf(data.pdf)}>Show PDF</button>
+                            </div>
+                        ))}
+                </div>
+            </div>
         </div>
-      </form>
-
-      <div className='uploaded'>
-        <h4>Uploaded PDFs:</h4>
-        <div className='output-div'>
-          {allPdf === null
-            ? "loading"
-            : allPdf.map((data) => (
-              <div className='inner-div' key={data._id}>
-                <h6>Title: {data.title}</h6>
-                <button className='btn btn-primary' onClick={() => showPdf(data.pdf)}>Show PDF</button>
-              </div>
-            ))}
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Upload;
