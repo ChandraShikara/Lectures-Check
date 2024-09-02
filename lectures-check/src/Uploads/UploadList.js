@@ -10,6 +10,8 @@ const UploadList = () => {
     const [medias, setMedias] = useState([]);
     const [videoId, setVideoId] = useState(null);
     const [isVideoUploaded, setIsVideoUploaded] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [uploading, setUploading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,18 +36,23 @@ const UploadList = () => {
             alert('Please select a file and enter a title.');
             return;
         }
-    
+
         const formData = new FormData();
         formData.append('videos', selectedFile);
         formData.append('name', title);
-    
+
+        setUploading(true);
         try {
             const response = await axios.post(`${BACKEND_URI}/api/v1/media/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
+                },
+                onUploadProgress: (progressEvent) => {
+                    const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    setUploadProgress(percentage);
                 }
             });
-    
+
             console.log('Upload response:', response.data);
             if (response.data.videoId) {
                 setVideoId(response.data.videoId); // Set videoId from response
@@ -60,8 +67,12 @@ const UploadList = () => {
         } catch (error) {
             console.error('Error uploading video:', error);
             alert('Error uploading video. Please try again.');
+        } finally {
+            setUploading(false);
+            setUploadProgress(0);
         }
     };
+
     const handleNext = () => {
         navigate('/uploads', { state: { videoId } }); // Pass videoId to the Upload component
     };
@@ -71,6 +82,22 @@ const UploadList = () => {
             <div className="row">
                 <div className="col-md-6">
                     <h2>Upload Video</h2>
+                    {uploading && (
+                        <div className="mb-3">
+                            <div className="progress">
+                                <div
+                                    className="progress-bar"
+                                    role="progressbar"
+                                    style={{ width: `${uploadProgress}%` }}
+                                    aria-valuenow={uploadProgress}
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                >
+                                    {uploadProgress}%
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     <div className="mb-3">
                         <label htmlFor="title" className="form-label">Title:</label>
                         <input 

@@ -1,1 +1,0 @@
- So we now know why we need a backend in order to create our web application, but which technology are we going to use to create it? Well, we've actually got quite a few options. You could use Java, Ruby on Rails, PHP, ASP.net, Node.js, Python, and a whole load more. But in this course, we're going to choose Node.js. Now, why Node.js? Well, the most important thing is that

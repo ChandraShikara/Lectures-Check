@@ -1,0 +1,43 @@
+
+
+so we now why we need a backend in order to create a web application but which technology are you going to 
+use to create a few options you could use Java review On Rails php.net Nokia 5.1 in this course the most 
+important thing is allows us to create a backend using JavaScript so we can use one language spend a lot of 
+extra time learning about yet another language and all of its interesting we are ready to know how to use 
+JavaScript now in addition to that no it is also super fast and will allow us to create really scalable and fast 
+running websites and you know the only once using node really good company here website such as trailer 
+Twitter Netflix originals in the backend and more more companies are joining their ranks and starting to use 
+node no in the last few years if you been to any technical conferences you had not known as a lot of people 
+who are super excited about this technology and in the coming lesson you can see exactly why and how 
+awesome it can be so we talk about why we want to use node but what exactly does it do anyways will 
+currently in our websites we return JavaScript code and we been able to executed inside a browser now that's 
+really really important but up until now that JavaScript code has been locked behind bars and kept inside the 
+browser so it's only been able to interact with the browser request information from the browser when listeners 
+to components in the browser but we've not been able to write JavaScript code for a website that able to go 
+beyond the boundaries of the browser for example of code is unable to reach out of the browser into the user 
+computer and get access to for example the file system or the networking processes and is a very good reason 
+you don't want to load website parks viruses hackers who are trying to happen to your local file system it be 
+very very dangerous if they could download or look into your local files right but there are some situations 
+where for example if you want to build a desktop application like atom when you do need to access the file 
+system in order load of those code files that the user is going to edit situations you need to be able to access the 
+file system or listen to the network basically you need to be after workout that can interact directly with the 
+computer independent of the browser and that's exactly what node JS allows us to do it allows us to take 
+JavaScript out of the browser and liberate it allowing it interact directly with the hardware of a computer so we 
+can now use JavaScript inside a website in order to give it functionality and behaviour for implementing 
+animations or drop down menu use but no JS allows us to use JavaScript to interact directly with the hardware 
+the computer so we can use it for example to create a desktop application and in fact atom the code editor that 
+we will using all of this time is based on node JS so now with node JS you can write JavaScript code not just in 
+the browser to affect the behaviour of your website applications that work on your computer right so some of 
+you guys might think well fair enough so you can use no just to program desktop applications why is that 
+interesting to me we are learning how to make websites right well we can run node JS on our own computer 
+but we could also use to run JavaScript code on somebody else's computer login to Google I am putting a 
+query and your browser will make a request to Google Service and on the service we can actually execute 
+JavaScript code to process the request and after that time we can send back the result to the user to the client 
+and simply get their web browser to display the information and all of the heavy lifting the code execution 
+happens behind the scenes on the server on the client side and now make your website a lot more capable so in 
+the coming lessons we can be using node JS to interact directly with the computer in order to access local files 
+or listen to network traffic and manipulate databases so I have you looking forward to it in the next lesson we 
+can get started installing node so make sure you check the lesson title for the correct lesson I used to follow 
+because one of them is for PC uses and another one of once you done with the installation will get back on the 
+coding and creating websites and seeing what you can do with this fantastic Technology  
+ 

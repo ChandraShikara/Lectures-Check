@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SimilarityAnalyzer = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { pdfId, videoId } = location.state || {};
 
     const [similarityScore, setSimilarityScore] = useState(null);
@@ -42,23 +43,35 @@ const SimilarityAnalyzer = () => {
         }
     }, [pdfId, videoId]);
 
+    const handleShowAnalysis = () => {
+        navigate('/analysis', { state: { similarityScore } });
+    };
+
     return (
-        <div className="similarity-analyzer">
-            <button 
-                className="btn btn-primary" 
-                onClick={fetchSimilarityScore} 
-                disabled={loading || !pdfId || !videoId}
-            >
-                {loading ? 'Calculating...' : 'Calculate Similarity'}
-            </button>
+        <div className="similarity-analyzer d-flex justify-content-center align-items-center vh-100" style={{ backgroundColor: '#1D232A', color: '#fff' }}>
+            <div className="container text-center">
+                <button 
+                    className="btn btn-primary mb-4" 
+                    onClick={fetchSimilarityScore} 
+                    disabled={loading || !pdfId || !videoId}
+                >
+                    {loading ? 'Calculating...' : 'Calculate Similarity'}
+                </button>
 
-            {similarityScore !== null && (
-                <div className="similarity-score">
-                    <h3>Similarity Score: {similarityScore}%</h3>
-                </div>
-            )}
+                {similarityScore !== null && (
+                    <>
+                        <h3 className="mb-4">Similarity Score: {similarityScore}%</h3>
+                        <button 
+                            className="btn btn-success"
+                            onClick={handleShowAnalysis}
+                        >
+                            Show Analysis
+                        </button>
+                    </>
+                )}
 
-            {error && <div className="error-message">{error}</div>}
+                {error && <div className="error-message text-danger">{error}</div>}
+            </div>
         </div>
     );
 };

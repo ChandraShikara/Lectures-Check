@@ -7,10 +7,12 @@ function Upload() {
     const location = useLocation();
     const { videoId } = location.state || {}; 
     const [title, setTitle] = useState("");
-    const [file, setFile] = useState(null); // Changed initial value to null
+    const [file, setFile] = useState(null);
     const [allPdf, setAllPdf] = useState([]);
     const [pdfId, setPdfId] = useState(null);
     const [isPdfUploaded, setIsPdfUploaded] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [uploading, setUploading] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,6 +34,8 @@ function Upload() {
         const formData = new FormData();
         formData.append("title", title);
         formData.append("file", file);
+
+        setUploading(true);
   
         try {
             const result = await axios.post(
@@ -39,12 +43,16 @@ function Upload() {
                 formData,
                 {
                     headers: { "Content-Type": "multipart/form-data" },
+                    onUploadProgress: (progressEvent) => {
+                        const percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                        setUploadProgress(percentage);
+                    }
                 }
             );
             console.log('Upload result:', result.data);
             if (result.data.status === "ok") {
                 alert("Uploaded Successfully!");
-                getPdf(); // Refresh the list of PDFs after successful upload
+                getPdf();
   
                 if (result.data.pdfId) {
                     setPdfId(result.data.pdfId);
@@ -56,6 +64,9 @@ function Upload() {
         } catch (error) {
             console.error('Error uploading PDF:', error);
             alert('Error uploading PDF. Please try again.');
+        } finally {
+            setUploading(false);
+            setUploadProgress(0);
         }
     };
 
@@ -98,6 +109,20 @@ function Upload() {
                     disabled={isPdfUploaded}
                 />
                 <br/>
+                {uploading && (
+                    <div className="progress mt-2">
+                        <div
+                            className="progress-bar"
+                            role="progressbar"
+                            style={{ width: `${uploadProgress}%` }}
+                            aria-valuenow={uploadProgress}
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                        >
+                            {uploadProgress}%
+                        </div>
+                    </div>
+                )}
                 <div className="button-container">
                     {!isPdfUploaded && (
                         <button className="btn btn-primary" type='submit'>

@@ -11,6 +11,7 @@
   border: 1px solid black;
   width: 25%;
   text-align: center;
+  position: relative; /* Ensure progress bar positioning is relative to this container */
 }
 
 .form-control {
@@ -43,9 +44,29 @@
   margin: 0 auto;
 }
 
-/* New CSS for button spacing */
+/* Button container with spacing */
 .button-container {
   display: flex;
   justify-content: space-between;
   gap: 10px; /* Adds space between buttons */
+  margin-top: 20px; /* Space above the button container */
+}
+
+/* Styling the progress bar */
+.progress {
+  margin-top: 20px; /* Space between progress bar and other elements */
+  width: 100%; /* Full width of the container */
+  border: 1px solid #ddd; /* Light border for the progress container */
+  border-radius: 5px; /* Rounded corners for progress container */
+  overflow: hidden; /* Ensure progress bar doesn’t overflow the container */
+}
+
+.progress-bar {
+  height: 20px; /* Height of the progress bar */
+  background-color: #007bff; /* Blue background for progress bar */
+  transition: width 0.4s ease; /* Smooth width transition */
+  color: white;
+  text-align: center; /* Center text within progress bar */
+  line-height: 20px; /* Center text vertically within progress bar */
+  border-radius: 5px; /* Rounded corners for the progress bar */
 }

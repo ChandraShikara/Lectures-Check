@@ -16,6 +16,7 @@ import Features from './components/features-secton/Features';
 import Uploadpdf from './Uploads/Uploadpdf';
 import UploadList from './Uploads/UploadList';
 import Anlayzepage from './Uploads/Anlayzepage';
+import Analysis from './Uploads/Analysis';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -54,6 +55,7 @@ function App() {
                         <Route path="/uploads" element={<Uploadpdf/>}/>
                         <Route path="/uploadvd" element={<Uploadpage/>}/>
                         <Route path = "/analyze" element = {<Anlayzepage/>}/>
+                        <Route path="/analysis" element={<Analysis/>}/>
                     </Routes>
                 </>
             )}
